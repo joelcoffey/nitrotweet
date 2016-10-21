@@ -1,0 +1,22 @@
+.Tweet {
+  padding: 5px;
+  text-align: left;
+}
+
+.Tweet .footer {
+  font-size: 14px;
+  margin-bottom: 5px;
+}
+
+.Tweet .tweet-text {
+  margin: 10px;
+}
+
+.Tweet .header a {
+  color: #777;
+}
+
+.Tweet img {
+  max-width: 250px;
+  max-height: 250px;
+}

@@ -1,0 +1,14 @@
+.TweetSearch input {
+  width: 250px;
+  height: 30px;
+  line-height: 30px;
+  margin-bottom: 10px;
+  border-top-left-radius: 5px;
+  border-bottom-left-radius: 5px;
+  border-right: none;
+}
+
+.TweetSearch button {
+  height: 36px;
+  width: 50px;
+}
