@@ -16,6 +16,8 @@ app.use(session({
   cookie: { secure: false }
 }));
 
+app.set('view engine', 'pug');
+
 // read twitter configuration from env
 app.locals.twitter = {};
 
@@ -25,10 +27,11 @@ app.locals.twitter = {};
   'TWITTER_USER_ACCESS_TOKEN',
   'TWITTER_USER_ACCESS_TOKEN_SECRET'
 ].forEach((key) => {
-  if (!process.env[key]) {
+  let value = process.env[key];
+  if (!value) {
     throw new Error(`Please define ${key} in .env file in project root`);
   }
-  app.locals.twitter[key] = key;
+  app.locals.twitter[key] = value;
 });
 
 // authentication middleware
@@ -49,8 +52,8 @@ function isAuthorized(req, res, next) {
 const oa = new oauth.OAuth(
     'https://api.twitter.com/oauth/request_token',
     'https://api.twitter.com/oauth/access_token',
-    process.env.TWITTER_CONSUMER_TOKEN,
-    process.env.TWITTER_CONSUMER_TOKEN_SECRET,
+    app.locals.twitter.TWITTER_CONSUMER_TOKEN,
+    app.locals.twitter.TWITTER_CONSUMER_TOKEN_SECRET,
     '1.0A',
     'http://127.0.0.1:3001/auth/twitter_callback',
     'HMAC-SHA1'
@@ -95,8 +98,8 @@ app.get('/auth/twitter_callback', function(req, res) {
 // quick hack to bypass auth for integ tests (wouldn't use for real app)
 app.get('/auth/usetestcreds', (req, res) => {
   req.session.oauth = {
-    access_token: prcoess.env.TWITTER_USER_ACCESS_TOKEN,
-    access_token_secret: process.env.TWITTER_USER_ACCESS_TOKEN_SECRET
+    access_token: app.locals.twitter.TWITTER_USER_ACCESS_TOKEN,
+    access_token_secret: app.locals.twitter.TWITTER_USER_ACCESS_TOKEN_SECRET
   };
   req.session.authorized = true;
   req.session.testing = true;
