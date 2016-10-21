@@ -6,7 +6,8 @@ Allows a user enter a twitter username, then fetch and display their recent twee
 ## Build Instructions
 
 ~~~~
-npm run install
+npm run clientinstall
+npm install
 npm run build
 ~~~~
 
